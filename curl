@@ -1,0 +1,28 @@
+curl -X POST \
+  http://localhost:5000/equipment \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "unite_centrale": "HP",
+  "ecran": "Dell",
+  "printer": "Canon",
+  "video_projecteur": "Epson",
+  "destination": "Main Conference Room",
+  "cycle": "Monthly",
+  "livre_par": "John Doe",
+  "receptionne_par": "Jane Doe",
+  "fonction": "IT Manager",
+  "demande": "Increased productivity",
+  "telephone": "555-1234",
+  "email": "john.doe@example.com",
+  "photos_avant": "http://example.com/photos/1",
+  "photos_apres": "http://example.com/photos/2",
+  "commune": "Paris",
+  "DP": "75001",
+  "AREF": "Ile-de-France",
+  "observation": "No defects found"
+}'
+
+DELETE 
+
+curl -d '{"date":"2023-01-13", "livreur":"Mme Laaziz", "receptionnaire":"M glaoui", "commune_sce":"Some Commune", "dp_div":"Some DP", "aref_dir":"Some AREF", "observation":"Some observation", "telephone":"1234567890", "email":"john.doe@example.com", "photos_avant":"Some photos avant", "photos_apres":"Some photos apres"}' -H "Content-Type: application/json" -X PUT http://localhost:5000/distributions/1
+

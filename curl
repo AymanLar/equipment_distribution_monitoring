@@ -26,3 +26,4 @@ DELETE
 
 curl -d '{"date":"2023-01-13", "livreur":"Mme Laaziz", "receptionnaire":"M glaoui", "commune_sce":"Some Commune", "dp_div":"Some DP", "aref_dir":"Some AREF", "observation":"Some observation", "telephone":"1234567890", "email":"john.doe@example.com", "photos_avant":"Some photos avant", "photos_apres":"Some photos apres"}' -H "Content-Type: application/json" -X PUT http://localhost:5000/distributions/1
 
+curl -d '{"ref":"NewRef","destination":"NewDestination","cycle":"NewCycle","livre_par":"NewPerson1","receptionne_par":"NewPerson2","fonction":"NewFonction1","demande":"NewDemande1"}' -H "Content-Type: application/json" -X PUT http://localhost:5000/distributions/1/devices/1

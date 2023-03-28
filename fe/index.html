@@ -28,6 +28,7 @@
 					<th>DP/Div</th>
 					<th>AREF/Dir</th>
 					<th>Observation</th>
+                    <th>Action</th>
 				</tr>
 			</thead>
 			<tbody id="distributions-table">
@@ -43,7 +44,7 @@
 				success: function(data) {
                     console.log(data)
 					var table = $("#distributions-table");
-					$.each(data.data, function(index, value) {
+					$.each(data.distributions, function(index, value) {
 						var row = "<tr>";
 						row += "<td>" + value[1] + "</td>";
 						row += "<td>" + value[2] + "</td>";
@@ -61,6 +62,7 @@
 						row += "<td>" + value[14] + "</td>";
 						row += "<td>" + value[15] + "</td>";
 						row += "<td>" + value[16] + "</td>";
+                        row += "<td><button><a>editer</a></button><button>suprimmer</button>";
 						row += "</tr>";
 						table.append(row);
 					});

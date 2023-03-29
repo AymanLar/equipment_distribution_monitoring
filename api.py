@@ -83,13 +83,14 @@ def delete_distribution(distribution_id):
 @app.route('/distributions/<int:distribution_id>/devices', methods=['POST'])
 def create_device(distribution_id):
     cur = mysql.connection.cursor()
+    name = request.json['name']
     ref = request.json['ref']
     destination = request.json['destination']
     cycle = request.json['cycle']
     fonction =request.json['fonction']
     demande = request.json['demande']
-    cur.execute("INSERT INTO devices (distribution_id, ref, destination, cycle, fonction, demande) VALUES (%s, %s, %s, %s, %s, %s)",
-                (distribution_id, ref, destination, cycle, fonction, demande))
+    cur.execute("INSERT INTO devices (distribution_id,name, ref, destination, cycle, fonction, demande) VALUES (%s ,%s, %s, %s, %s, %s, %s)",
+                (distribution_id,name, ref, destination, cycle, fonction, demande))
     mysql.connection.commit()
     cur.close()
     return jsonify({'message': 'Device created successfully'})
@@ -107,7 +108,7 @@ def get_devices(distribution_id):
 @app.route('/distributions/<int:distribution_id>/devices/<int:device_id>', methods=['GET'])
 def get_device_by_id(distribution_id, device_id):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM devices WHERE distribution_id = %s AND id = %s", (distribution_id, device_id))
+    cur.execute("SELECT * FROM devices WHERE distribution_id = %s AND device_id = %s", (distribution_id, device_id))
     data = cur.fetchone()
     cur.close()
     if data:
@@ -119,13 +120,14 @@ def get_device_by_id(distribution_id, device_id):
 @app.route('/distributions/<int:distribution_id>/devices/<int:device_id>', methods=['PUT'])
 def update_device(distribution_id, device_id):
     cur = mysql.connection.cursor()
+    name = request.json['ref']
     ref = request.json['ref']
     destination = request.json['destination']
     cycle = request.json['cycle']
     fonction =request.json['fonction']
     demande = request.json['demande']
-    cur.execute("UPDATE devices SET ref = %s, destination = %s, cycle = %s, fonction = %s, demande = %s WHERE distribution_id = %s AND device_id = %s",
-                (ref, destination, cycle, fonction, demande, distribution_id, device_id))
+    cur.execute("UPDATE devices SET name = %s, ref = %s, destination = %s, cycle = %s, fonction = %s, demande = %s WHERE distribution_id = %s AND device_id = %s",
+                (name, ref, destination, cycle, fonction, demande, distribution_id, device_id))
     mysql.connection.commit()
     cur.close()
     return jsonify({'message': 'Device updated successfully'})

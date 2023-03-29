@@ -1,77 +1,53 @@
+<!-- the data that should be in the index page : 1date,destination,livre par,receptionne par,demande,DP/Div -->
+
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Used Equipment Distribution Monitoring</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<div class="container">
-		<h2>Used Equipment Distribution Monitoring</h2>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Date</th>
-					<th>Ref</th>
-					<th>Destination</th>
-					<th>Cycle</th>
-					<th>Livré par</th>
-					<th>Réceptionné par</th>
-					<th>Fonction</th>
-					<th>Demande</th>
-					<th>Téléphone</th>
-					<th>Email</th>
-					<th>Photos avant</th>
-					<th>Photos après</th>
-					<th>Commune/Sce</th>
-					<th>DP/Div</th>
-					<th>AREF/Dir</th>
-					<th>Observation</th>
-                    <th>Action</th>
-				</tr>
-			</thead>
-			<tbody id="distributions-table">
-			</tbody>
-		</table>
-	</div>
-	<script>
-		$(document).ready(function() {
-			$.ajax({
-				url: "http://localhost:5000/distributions",
-				type: "GET",
-				dataType: "json",
-				success: function(data) {
-                    console.log(data)
-					var table = $("#distributions-table");
-					$.each(data.distributions, function(index, value) {
-						var row = "<tr>";
-						row += "<td>" + value[1] + "</td>";
-						row += "<td>" + value[2] + "</td>";
-						row += "<td>" + value[3] + "</td>";
-						row += "<td>" + value[4] + "</td>";
-						row += "<td>" + value[5] + "</td>";
-						row += "<td>" + value[6] + "</td>";
-						row += "<td>" + value[7] + "</td>";
-						row += "<td>" + value[8] + "</td>";
-						row += "<td>" + value[9] + "</td>";
-						row += "<td>" + value[10] + "</td>";
-						row += "<td>" + value[11] + "</td>";
-						row += "<td>" + value[12] + "</td>";
-						row += "<td>" + value[13] + "</td>";
-						row += "<td>" + value[14] + "</td>";
-						row += "<td>" + value[15] + "</td>";
-						row += "<td>" + value[16] + "</td>";
-                        row += "<td><button><a>editer</a></button><button>suprimmer</button>";
-						row += "</tr>";
-						table.append(row);
-					});
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					console.log(textStatus, errorThrown);
-				}
-			});
-		});
-	</script>
-</body>
+  <head>
+    <title>Distributions Table</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Distributions Table</h1>
+	  <input type="button" value="créer distribution" href="/add.html">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Destination</th>
+            <th>Livre par</th>
+            <th>Receptionne par</th>
+            <th>Demande</th>
+            <th>DP/Div</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Use JavaScript to fetch data from the API and create table rows -->
+        </tbody>
+      </table>
+    </div>
+    <script>
+      fetch('http://localhost:5000/distributions')
+        .then(response => response.json())
+        .then(data => {
+          const tbody = document.querySelector('tbody');
+		  console.log(data)
+          data.distributions.forEach(distribution => {
+            const row = `
+              <tr>
+                <td>${distribution[0]}</td>
+                <td>${distribution[2]}</td>
+                <td>${distribution[3]}</td>
+                <td>${distribution[4]}</td>
+                <td>${distribution[5]}</td>
+                <td>${distribution[7]}</td>
+				<td><a href="" >Informations</a></rd>
+              </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', row);
+          });
+        })
+        .catch(error => console.error(error));
+    </script>
+  </body>
 </html>

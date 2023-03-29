@@ -31,3 +31,5 @@ CREATE TABLE devices (
   PRIMARY KEY (device_id),
   FOREIGN KEY (distribution_id) REFERENCES distributions(distribution_id)
 );
+
+ ALTER TABLE devices ADD COLUMN name VARCHAR(255) NOT NULL;

@@ -1,33 +1,134 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Add Distribution</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Add Distribution Info</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
   </head>
   <body>
     <div class="container">
-      <h1>Add Distribution</h1>
-      <form action="/distributions" method="POST">
+      <h1 class="mt-5 mb-3">Add Distribution Info</h1>
+      
+      <!-- Distribution Form -->
+      <form id="distributionForm" action="/distributions" method="post">
         <div class="form-group">
-          <label for="distribution-date">Date:</label>
-          <input type="date" id="distribution-date" name="date" class="form-control">
+          <label for="date">Date:</label>
+          <input type="date" class="form-control" id="date" name="date" required>
         </div>
+        
         <div class="form-group">
-          <label for="distribution-destination">Destination:</label>
-          <input type="text" id="distribution-destination" name="destination" class="form-control">
+          <label for="destination">Destination:</label>
+          <input type="text" class="form-control" id="destination" name="destination" required>
         </div>
+        
         <div class="form-group">
-          <label for="distribution-livre-par">Livré par:</label>
-          <input type="text" id="distribution-livre-par" name="livre_par" class="form-control">
+          <label for="cycle">Cycle:</label>
+          <input type="text" class="form-control" id="cycle" name="cycle" required>
         </div>
+        
         <div class="form-group">
-          <label for="distribution-receptionne-par">Receptionné par:</label>
-          <input type="text" id="distribution-receptionne-par" name="receptionne_par" class="form-control">
+          <label for="livre_par">Livre Par:</label>
+          <input type="text" class="form-control" id="livre_par" name="livre_par" required>
         </div>
+        
         <div class="form-group">
-          <label for="distribution-demande">Demande:</label>
-          <input type="text" id="distribution-demande" name="demande" class="form-control">
+          <label for="receptionne_par">Receptionne Par:</label>
+          <input type="text" class="form-control" id="receptionne_par" name="receptionne_par" required>
         </div>
+        
         <div class="form-group">
-          <label for="distribution-dp-div">DP/Div:</label>
-          <input type="text" id="" name="" class="">
+          <label for="fonction">Fonction:</label>
+          <input type="text" class="form-control" id="fonction" name="fonction" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="demand">Demand:</label>
+          <input type="text" class="form-control" id="demand" name="demand" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="telephone">Telephone:</label>
+          <input type="tel" class="form-control" id="telephone" name="telephone" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        
+        <!-- <div class="form-group">
+          <label for="photo_avant">Photo Avant:</label>
+          <input type="file" class="form-control-file" id="photo_avant" name="photo_avant" accept="image/*">
+        </div>
+        
+        <div class="form-group">
+          <label for="photo_apres">Photo Apres:</label>
+          <input type="file" class="form-control-file" id="photo_apres" name="photo_apres" accept="image/*">
+        </div> -->
+        
+        <div class="form-group">
+          <label for="comune_sce">Comune/Sce:</label>
+          <input type="text" class="form-control" id="comune_sce" name="comune_sce" required>
+        </div>
+        
+
+        <div class="form-group">
+      <label for="dp_div">DP/Div:</label>
+      <input type="text" class="form-control" id="dp_div" name="dp_div" required><br><br>
+      </div>
+      
+        <div class="form-group">
+      <label for="aref_dir">AREF/Dir:</label>
+      <input type="text" class="form-control" id="aref_dir" name="aref_dir" required><br><br>
+      </div>
+      <div class="form-group">
+      <label for="observation">Observation:</label>
+      <textarea id="observation" class="form-control" name="observation"></textarea><br><br>
+      </div>
+      <input type="submit" value="Submit">
+    </form>
+
+    <script>
+const distributionForm = document.getElementById("distributionForm");
+distributionForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  
+  // Get the form data
+  const formData = new FormData(distributionForm);
+  const distributionData = {};
+  for (let [key, value] of formData.entries()) {
+    distributionData[key] = value;
+  }
+  
+  // Send the distribution data to the /distributions endpoint
+  fetch("http://localhost:5000/distributions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(distributionData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Send the device data to the /distributions/{distribution_id}/devices endpoint
+    const devices = distributionData.devices.split(",");
+    const distributionId = data.id;
+    for (const device of devices) {
+      fetch(`http://localhost:5000/distributions/${distributionId}/devices`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ device: device.trim() })
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+    }
+  })
+  .catch(error => console.error(error));
+});
+
+    </script>
+  </body>
+</html>

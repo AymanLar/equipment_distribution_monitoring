@@ -60,4 +60,3 @@ PUT /distributions/<int:distribution_id>/devices/<int:device_id>
 ``
 DELETE /distributions/<int:distribution_id>/devices/<int:device_id>
 ``
-
